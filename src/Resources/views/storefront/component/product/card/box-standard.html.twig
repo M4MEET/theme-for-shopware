@@ -10,7 +10,7 @@
         <div class="container-fluid product-box box-{{ layout }}">
             {% block component_product_box_content %}
                 <div class="row">
-                    
+
                     {% block component_product_box_badges %}
                         {% sw_include '@Storefront/storefront/component/product/card/badges.html.twig' %}
                     {% endblock %}
@@ -92,6 +92,42 @@
                                 </a>
                             {% endblock %}
 
+                            {#add block here for the product properties #}
+                                {% block component_product_box_sorted_properties %}
+                                    <table class="table table-striped product-detail-properties-table">
+                                       <tbody>
+                                       {% for property in product.sortedProperties %}
+                                            {% if property is not null %}
+                                                <tr class="properties-row">
+                                                    {% block component_product_box_sorted_properties_list_item %}
+                                                        <th class="properties-label">
+                                                            {% block component_product_box_sorted_properties_list_item_name %}
+                                                                {{ property.translated.name | e }}
+                                                            {% endblock %}
+                                                        </th>
+                                                        <td class="properties-value">
+                                                            {% if property.options.elements | length > 0 %}
+                                                                {% block component_product_box_sorted_properties_list_item_options %}
+                                                                    {% apply spaceless %}
+                                                                        {% for option in property.options %}
+                                                                            {% set i = ( i | default(0) ) + 1 %}
+                                                                            {% block component_product_box_sorted_properties_list_item_option_name %}
+                                                                                {% if i > 1 %}, {% endif %}  {{ option.translated.name|e }}
+                                                                            {% endblock %}
+                                                                        {% endfor %}
+                                                                    {% endapply %}
+                                                                {% endblock %}
+                                                            {% endif %}
+                                                        </td>
+                                                    {% endblock %}
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endblock %}
+                            {#end block here for the product properties#}
+
                             {% block component_product_box_variant_characteristics %}
                                 <div class="product-variant-characteristics">
                                     <div class="product-variant-characteristics-text">
@@ -109,16 +145,17 @@
                                 </div>
                             {% endblock %}
 
-                            {% block component_product_box_description %}
+                            {#{% block component_product_box_description %}
                                 <div class="product-description">
                                     {{ product.translated.description|striptags|raw }}
                                 </div>
-                            {% endblock %}
+                            {% endblock %}#}
                         </div>
                     {% endblock %}
 
                     <div class="col">
-                         {% block component_product_box_price %}
+
+                        {% block component_product_box_price %}
                             {% sw_include '@Storefront/storefront/component/product/card/price-unit.html.twig' %}
                          {% endblock %}
 
@@ -126,7 +163,6 @@
                             {% sw_include '@Storefront/storefront/component/product/card/action.html.twig' %}
                         {% endblock %}
                     </div>
-
                 </div>
             {% endblock %}
         </div>
