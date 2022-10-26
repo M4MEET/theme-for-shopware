@@ -9,7 +9,7 @@
 
         <div class="container-fluid product-box box-{{ layout }}">
             {% block component_product_box_content %}
-                <div class="row">
+                <div class="row align-items-center border rounded">
 
                     {% block component_product_box_badges %}
                         {% sw_include '@Storefront/storefront/component/product/card/badges.html.twig' %}
@@ -56,7 +56,18 @@
                                     </div>
                                 {% endif %}
                             </a>
-
+                            {% block component_product_box_rating %}
+                                {% if config('core.listing.showReview') %}
+                                    <div class="product-rating">
+                                        {% if product.ratingAverage %}
+                                            {% sw_include '@Storefront/storefront/component/review/rating.html.twig' with {
+                                                points: product.ratingAverage,
+                                                style: 'text-primary'
+                                            } %}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endblock %}
                             {% if config('core.cart.wishlistEnabled') %}
                                 {% block component_product_box_wishlist_action %}
                                     {% sw_include '@Storefront/storefront/component/product/card/wishlist.html.twig' with {
@@ -71,18 +82,6 @@
 
                     {% block component_product_box_info %}
                         <div class="product-info col-6">
-                            {% block component_product_box_rating %}
-                                {% if config('core.listing.showReview') %}
-                                    <div class="product-rating">
-                                        {% if product.ratingAverage %}
-                                            {% sw_include '@Storefront/storefront/component/review/rating.html.twig' with {
-                                                points: product.ratingAverage,
-                                                style: 'text-primary'
-                                            } %}
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                            {% endblock %}
 
                             {% block component_product_box_name %}
                                 <a href="{{ seoUrl('frontend.detail.page', {'productId': id}) }}"
@@ -92,9 +91,9 @@
                                 </a>
                             {% endblock %}
 
-                            {#add block here for the product properties #}
+                            {#added custom block for the product properties to show on listing#}
                                 {% block component_product_box_sorted_properties %}
-                                    <table class="table table-striped product-detail-properties-table">
+                                    <table class="table-responsive  table-sm table-hover table-striped product-detail-properties-table">
                                        <tbody>
                                        {% for property in product.sortedProperties %}
                                             {% if property is not null %}
