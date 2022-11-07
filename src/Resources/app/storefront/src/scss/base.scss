@@ -13,5 +13,13 @@
 
 .container
 {
-    max-width: 1200px;
+    max-width: 1400px;
+}
+
+.category-navigation {
+       &.level-0 > {
+        .category-navigation-entry {
+            border-bottom: none;
+        }
+    }
 }
