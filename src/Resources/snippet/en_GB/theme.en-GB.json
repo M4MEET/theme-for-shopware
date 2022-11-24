@@ -1,0 +1,12 @@
+{
+    "battron": {
+        "listing": {
+            "product": {
+                "showStock": "In Stock",
+                "limitedStock": "Only",
+                "limitedStockToo": "In Stock",
+                "outOfStock": "Not in Stock"
+            }
+        }
+    }
+}
