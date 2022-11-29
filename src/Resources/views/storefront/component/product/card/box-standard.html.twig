@@ -8,9 +8,8 @@
         {% set variation = product.variation %}
 
         <div class="container-fluid product-box box-{{ layout }}">
-            {% block component_product_box_content %}
-                <div class="row align-items-center border rounded">
-
+     {% block component_product_box_content %}
+                <div class="row p-3 align-items-center border rounded">
                     {% block component_product_box_badges %}
                         {% sw_include '@Storefront/storefront/component/product/card/badges.html.twig' %}
                     {% endblock %}
