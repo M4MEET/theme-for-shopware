@@ -3,8 +3,7 @@
         "listing": {
             "product": {
                 "showStock": "In Stock",
-                "limitedStock": "Only",
-                "limitedStockToo": "In Stock",
+                "limitedStock": "Only %product.stock% In Stock",
                 "outOfStock": "Not in Stock"
             }
         }

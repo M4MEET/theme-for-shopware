@@ -3,8 +3,7 @@
         "listing": {
             "product": {
                 "showStock": "Auf Lager",
-                "limitedStock": "Nur noch",
-                "limitedStockToo": "Stück auf Lager",
+                "limitedStock": "Nur noch %product.stock% Stück auf Lager",
                 "outOfStock": "Bald wieder da"
             }
         }
