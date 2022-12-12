@@ -58,7 +58,7 @@
                             </span>
                         {% elseif product.stock > 0 and product.stock <= 2 %}
                             <span class="badge rounded-pill bg-warning text-dark">
-                            {{ "battron.listing.product.limitedStock"|trans({'%product.stock%': product.stock}) }}
+                            {{ "battron.listing.product.limitedStock"|trans ({'%product.stock%': product.stock}) }}
                             </span>
                         {% elseif  product.stock <=0 %}
                             <span class="badge rounded-pill bg-danger text-white">
