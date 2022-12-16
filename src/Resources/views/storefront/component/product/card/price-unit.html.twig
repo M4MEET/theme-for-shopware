@@ -67,30 +67,30 @@
                         {% endif %}
                     </div>
                 {% endblock %}
-                {% block battron_component_offcanvas_summary_tax_info %}
-                    <button class="badge btn btn-secondary rounded-pill bg-secondary" data-toggle="modal" data-target="#exampleModal">
-                        {% if page.cart.price.taxStatus == "gross" %}
-                            {{ "general.grossTaxInformation"|trans|sw_sanitize }}
-                        {% else %}
-                            {{ "general.netTaxInformation"|trans|sw_sanitize }}
-                        {% endif %}
-                    </button>
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    ...
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
+{#
+                added custom block to display tax information
+#}
+                {% block battron_component_offcanvas_summary_tax_info %}
+                    <button class="badge btn btn-secondary rounded-pill bg-secondary">
+                        {% if context.taxState == "gross" %}
+                            {% set taxText = "general.grossTaxInformation"|trans|sw_sanitize %}
+                        {% else %}
+                            {% set taxText = "general.netTaxInformation"|trans|sw_sanitize %}
+                        {% endif %}
+
+                        <p class="product-detail-tax">
+                            {% block page_product_detail_tax_link %}
+                                <a class="product-detail-tax-link"
+                                   href="{{ path('frontend.cms.page',{ id: config('core.basicInformation.shippingPaymentInfoPage') }) }}"
+                                   title="{{ taxText }}"
+                                {{ dataBsToggleAttr }}="modal"
+                                data-url="{{ path('frontend.cms.page',{ id: config('core.basicInformation.shippingPaymentInfoPage') }) }}">
+                                {{ taxText }}
+                                </a>
+                            {% endblock %}
+                        </p>
+                    </button>
                 {% endblock %}
 
                 <div class="product-cheapest-price{% if isListPrice and price.regulationPrice.price and not displayFrom %} with-list-price{% endif %}{% if isRegulationPrice and displayFrom %} with-regulation-price{% endif %}">
