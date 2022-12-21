@@ -50,121 +50,6 @@
                 {% set isListPrice = price.listPrice.percentage > 0 %}
                 {% set isRegulationPrice = price.regulationPrice != null %}
 
-                {% block battron_component_product_box_stock_info %}
-                    <div class="product-stock-action">
-                        {% if product.stock >= 3 %}
-                            <span class="badge rounded-pill bg-success text-white">
-                                {{ 'battron.listing.product.showStock'  | trans }}
-                            </span>
-                        {% elseif product.stock > 0 and product.stock <= 2 %}
-                            <span class="badge rounded-pill bg-warning text-dark">
-                                {{ "battron.listing.product.limitedStock"|trans ({'%product.stock%': product.stock}) }}
-                            </span>
-                        {% elseif  product.stock <=0 %}
-                            <span class="badge rounded-pill bg-danger text-white">
-                                {{  "battron.listing.product.outOfStock"|trans }}
-                            </span>
-                        {% endif %}
-                    </div>
-                {% endblock %}
-
-{#
-                added custom block to display tax information
-#}
-                {% block battron_component_offcanvas_summary_tax_info %}
-                    <button class="badge btn btn-secondary rounded-pill bg-secondary">
-                        {% if context.taxState == "gross" %}
-                            {% set taxText = "general.grossTaxInformation"|trans|sw_sanitize %}
-                        {% else %}
-                            {% set taxText = "general.netTaxInformation"|trans|sw_sanitize %}
-                        {% endif %}
-
-                        <p class="product-detail-tax">
-                            {% block page_product_detail_tax_link %}
-                                <a class="product-detail-tax-link"
-                                   href="{{ path('frontend.cms.page',{ id: config('core.basicInformation.shippingPaymentInfoPage') }) }}"
-                                   title="{{ taxText }}"
-                                {{ dataBsToggleAttr }}="modal"
-                                data-url="{{ path('frontend.cms.page',{ id: config('core.basicInformation.shippingPaymentInfoPage') }) }}">
-                                {{ taxText }}
-                                </a>
-                            {% endblock %}
-                        </p>
-                    </button>
-                {% endblock %}
-               {# added block to show delivery information #}
-                {% block component_delivery_information %}
-                    {# @var product \Shopware\Core\Content\Product\ProductEntity #}
-                    {% if page is defined and page.product is defined %}
-                        {% set product = page.product %}
-                    {% endif %}
-
-                    <div class="product-delivery-information">
-                        {% if product.shippingFree %}
-                            {% block component_delivery_information_shipping_free %}
-                                <p class="delivery-information delivery-shipping-free">
-                                    <span class="delivery-status-indicator bg-info"></span>
-                                    {{ "general.deliveryShippingFree"|trans|sw_sanitize }}
-                                </p>
-                            {% endblock %}
-                        {% endif %}
-
-                        {% if not product.active %}
-                            {% block component_delivery_information_not_available %}
-                                <link itemprop="availability"
-                                      href="http://schema.org/LimitedAvailability"/>
-                                <p class="delivery-information delivery-not-available">
-                                    <span class="delivery-status-indicator bg-danger"></span>
-                                    {{ "general.deliveryNotAvailable"|trans|sw_sanitize }}
-                                </p>
-                            {% endblock %}
-                        {% elseif product.releaseDate and product.releaseDate|date('U') > "now"|date('U') %}
-                            {% block component_delivery_information_pre_order %}
-                                <link itemprop="availability"
-                                      href="http://schema.org/PreOrder"/>
-                                <p class="delivery-information delivery-preorder">
-                                    <span class="delivery-status-indicator bg-warning"></span>
-                                    {{ "general.deliveryShipping"|trans|sw_sanitize }} {{ product.releaseDate|format_date('long', locale=app.request.locale) }}
-                                </p>
-                            {% endblock %}
-                        {% elseif product.availableStock >= product.minPurchase and product.deliveryTime %}
-                            {% block component_delivery_information_available %}
-                                <link itemprop="availability" href="http://schema.org/InStock"/>
-                                <p class="delivery-information delivery-available">
-                                    <span class="delivery-status-indicator bg-success"></span>
-
-                                    {{ "detail.deliveryTimeAvailable"|trans({
-                                        '%name%': product.deliveryTime.translation('name')
-                                    })|sw_sanitize }}
-                                </p>
-                            {% endblock %}
-                        {% elseif product.isCloseout and product.availableStock < product.minPurchase %}
-                            {% block component_delivery_information_soldout %}
-                                <link itemprop="availability" href="http://schema.org/OutOfStock"/>
-                                <p class="delivery-information delivery-soldout">
-                                    <span class="delivery-status-indicator bg-danger"></span>
-                                    {{ "detail.soldOut"|trans|sw_sanitize }}
-                                </p>
-                            {% endblock %}
-                        {% elseif product.availableStock < product.minPurchase and product.deliveryTime and product.restockTime %}
-                            {% block component_delivery_information_restock %}
-                                <link itemprop="availability" href="http://schema.org/LimitedAvailability"/>
-                                <p class="delivery-information delivery-restock">
-                                    <span class="delivery-status-indicator bg-warning"></span>
-                                    {{ "detail.deliveryTimeRestock"|trans({
-                                        '%count%': product.restockTime,
-                                        '%restockTime%': product.restockTime,
-                                        '%name%': product.deliveryTime.translation('name')
-                                    })|sw_sanitize }}
-                                </p>
-                            {% endblock %}
-                        {% else %}
-                            {% block component_delivery_information_default %}{% endblock %}
-                        {% endif %}
-                    </div>
-                {% endblock %}
-                {#end of the custom delivery information block#}
-
                 <div class="product-cheapest-price{% if isListPrice and price.regulationPrice.price and not displayFrom %} with-list-price{% endif %}{% if isRegulationPrice and displayFrom %} with-regulation-price{% endif %}">
                     {% if cheapest.unitPrice != real.unitPrice %}
                         <div>{{ "listing.cheapestPriceLabel"|trans|sw_sanitize }}<span class="product-cheapest-price-price"> {{ cheapest.unitPrice|currency }}{{ "general.star"|trans|sw_sanitize }}</span></div>
@@ -202,4 +87,104 @@
             </div>
         {% endblock %}
     </div>
+
+    {# added custom block to display tax information #}
+    {% block page_product_detail_tax %}
+        <div class="product-detail-tax-container badge">
+            {% if context.taxState == "gross" %}
+                {% set taxText = "general.grossTaxInformation"|trans|sw_sanitize %}
+            {% else %}
+                {% set taxText = "general.netTaxInformation"|trans|sw_sanitize %}
+            {% endif %}
+
+            <p class="product-detail-tax">
+                {% block page_product_detail_tax_link %}
+                    <a class="product-detail-tax-link"
+                       href="{{ path('frontend.cms.page',{ id: config('core.basicInformation.shippingPaymentInfoPage') }) }}"
+                       title="{{ taxText }}"
+                    {{ dataBsToggleAttr }}="modal"
+                    data-url="{{ path('frontend.cms.page',{ id: config('core.basicInformation.shippingPaymentInfoPage') }) }}">
+                    {{ taxText }}
+                    </a>
+                {% endblock %}
+            </p>
+        </div>
+    {% endblock %}
+
+    {# added block to show delivery information #}
+    {% block component_delivery_information %}
+        {# @var product \Shopware\Core\Content\Product\ProductEntity #}
+        {% if page is defined and page.product is defined %}
+            {% set product = page.product %}
+        {% endif %}
+
+        <div class="product-delivery-information">
+            {% if product.shippingFree %}
+                {% block component_delivery_information_shipping_free %}
+                    <p class="delivery-information delivery-shipping-free badge">
+                        <span class="delivery-status-indicator bg-info"></span>
+                        {{ "general.deliveryShippingFree"|trans|sw_sanitize }}
+                    </p>
+                {% endblock %}
+            {% endif %}
+
+            {% if not product.active %}
+                {% block component_delivery_information_not_available %}
+                    <link itemprop="availability"
+                          href="http://schema.org/LimitedAvailability"/>
+                    <p class="delivery-information delivery-not-available badge">
+                        <span class="delivery-status-indicator bg-danger"></span>
+                        {{ "general.deliveryNotAvailable"|trans|sw_sanitize }}
+                    </p>
+                {% endblock %}
+
+            {% elseif product.availableStock >= product.minPurchase and product.deliveryTime %}
+                {#added custom snippet for the delivery time#}
+                {% block component_delivery_information_available %}
+                    <link itemprop="availability" href="http://schema.org/InStock"/>
+                    <p class="delivery-information delivery-available badge">
+                        <span class="delivery-status-indicator bg-success"></span>
+                        {{ "battron.listing.product.deliveryTimeAvailable"|trans({
+                            '%name%': product.deliveryTime.translation('name')
+                        })|sw_sanitize }}
+                    </p>
+                {% endblock %}
+            {% elseif product.isCloseout and product.availableStock < product.minPurchase %}
+                {% block component_delivery_information_soldout %}
+                    <link itemprop="availability" href="http://schema.org/OutOfStock"/>
+                    <p class="delivery-information delivery-soldout badge">
+                        <span class="delivery-status-indicator bg-danger"></span>
+                        {{ "detail.soldOut"|trans|sw_sanitize }}
+                    </p>
+                {% endblock %}
+            {% elseif product.availableStock < product.minPurchase and product.deliveryTime and product.restockTime %}
+                {% block component_delivery_information_restock %}
+                    <link itemprop="availability" href="http://schema.org/LimitedAvailability"/>
+                    <p class="delivery-information delivery-restock badge">
+                        <span class="delivery-status-indicator bg-warning"></span>
+                        {{ "detail.deliveryTimeRestock"|trans({
+                            '%count%': product.restockTime,
+                            '%restockTime%': product.restockTime,
+                            '%name%': product.deliveryTime.translation('name')
+                        })|sw_sanitize }}
+                    </p>
+                {% endblock %}
+            {% else %}
+                {% block component_delivery_information_default %}{% endblock %}
+            {% endif %}
+        </div>
+    {% endblock %}
+    {#end of the custom delivery information block#}
+
+    {% block battron_component_product_box_stock_info %}
+        <div class="product-stock-action">
+            {% if product.stock >= 3 %}
+                <span class="badge rounded-pill bg-success text-white">{{ 'battron.listing.product.showStock'  | trans }}</span>
+            {% elseif product.stock > 0 and product.stock <= 2 %}
+                <span class="badge rounded-pill bg-warning text-dark">{{ "battron.listing.product.limitedStock"|trans ({'%product.stock%': product.stock}) }}</span>
+            {% elseif  product.stock <=0 %}
+                <span class="badge rounded-pill bg-danger text-white">{{  "battron.listing.product.outOfStock"|trans }}</span>
+            {% endif %}
+        </div>
+    {% endblock %}
 {% endblock %}
