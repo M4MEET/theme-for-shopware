@@ -20,7 +20,7 @@
                     {% endblock %}
 
                     {% block component_product_box_image %}
-                        <div class="product-image-wrapper col-xl-4">
+                        <div class="product-image-wrapper col-12 col-sm-12 col-md-12">
                             {# fallback if display mode is not set #}
                             {% set displayMode = displayMode ?: 'standard' %}
 
@@ -80,7 +80,7 @@
                     {% endblock %}
 
                     {% block component_product_box_info %}
-                        <div class="product-info col-xl-5">
+                        <div class="product-info col-12 col-sm-12 col-md-12">
 
                             {% block component_product_box_name %}
                                 <a href="{{ seoUrl('frontend.detail.page', {'productId': id}) }}"
@@ -93,6 +93,7 @@
 
                             {#temp fix in the template using plugin called essential charcteristics for the listing view#}
                             {% block component_product_box_description %}
+
                                 {{ parent() }}
 
                             {% endblock %}
@@ -102,7 +103,7 @@
                         </div>
                     {% endblock %}
 
-                    <div class="col-auto">
+                    <div class="col-12 col-sm-12 col-md-12">
 
                         {% block component_product_box_price %}
                             {% sw_include '@Storefront/storefront/component/product/card/price-unit.html.twig' %}
