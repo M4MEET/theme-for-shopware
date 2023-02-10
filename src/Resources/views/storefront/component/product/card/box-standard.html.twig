@@ -92,12 +92,9 @@
 
                                 {#temp fix in the template using plugin called essential charcteristics for the listing view#}
                                 {% block component_product_box_description %}
-                                    <div class="product-description">
-                                        {{ product.translated.description|striptags|raw }}
-                                    </div>
+                                    {{ parent() }}
                                 {% endblock %}
                                 {# this block ends here : temp fix in the template using plugin called essential charcteristics for the listing view#}
-
 
                             </div>
                         {% endblock %}
