@@ -19,7 +19,7 @@
                         {% endblock %}
 
                         {% block component_product_box_image %}
-                            <div class="product-image-wrapper col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3">
+                            <div class="product-image-wrapper col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4">
                                 {# fallback if display mode is not set #}
                                 {% set displayMode = displayMode ?: 'standard' %}
 
@@ -99,7 +99,7 @@
                             </div>
                         {% endblock %}
 
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-3">
                             {# added condition to display own confTemp @include custom-price-unit.html.twig for imageLayout #}
                             {% if layout == 'image' %}
                                 {% block component_product_box_custom_price %}
