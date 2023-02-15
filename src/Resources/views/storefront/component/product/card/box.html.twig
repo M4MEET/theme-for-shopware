@@ -1,29 +1,29 @@
 {% sw_extends "@Storefront/storefront/component/product/card/box.html.twig" %}
 
-{#{% block component_product_box_include %}#}
-{#    #}{# Includes a custom product-box template defined by the layout variable.#}
-{#       The standard template is used if no custom layout is set. #}
+{% block component_product_box_include %}
+    {# Includes a custom product-box template defined by the layout variable.
+       The standard template is used if no custom layout is set. #}
 
-{#    {% if layout is empty %}#}
-{#        {% set layout = 'standard' %}#}
-{#    {% endif %}#}
+    {% if layout is empty %}
+        {% set layout = 'standard' %}
+    {% endif %}
 
-{#    {% set sizes = {#}
-{#        'xs': '500px',#}
-{#        'sm': '315px',#}
-{#        'md': '390px',#}
-{#        'lg': '350px',#}
-{#        'xl': '280px'#}
-{#    } %}#}
+    {% set sizes = {
+        'xs': '500px',
+        'sm': '315px',
+        'md': '390px',
+        'lg': '350px',
+        'xl': '280px'
+    } %}
 
-{#    {% if layout == 'image' %}#}
-{#        {% set sizes = {#}
-{#            'xs': '500px',#}
-{#            'sm': '315px',#}
-{#            'md': '390px',#}
-{#            'lg': '350px',#}
-{#            'xl': '280px'#}
-{#        } %}#}
-{#    {% endif %}#}
-{#    {{ parent() }}#}
-{#{% endblock %}#}
+    {% if layout == 'image' %}
+        {% set sizes = {
+            'xs': '500px',
+            'sm': '315px',
+            'md': '390px',
+            'lg': '350px',
+            'xl': '280px'
+        } %}
+    {% endif %}
+    {{ parent() }}
+{% endblock %}
