@@ -1,10 +1,1 @@
-{% sw_extends '@Storefront/storefront/component/product/card/box-standard.html.twig' %}
-
-{% block component_product_box_description %}
-    {{ parent() }}
-
-    {% if config('FaesslichFeaturesOnProducts.config.active') and config('FaesslichFeaturesOnProducts.config.showOnListing') or config('FaesslichFeaturesOnProducts.config.showOnSlider') %}
-        {% sw_include '@Storefront/storefront/component/features-on-product/features.html.twig' with { features: product.extensions.features.all(), pageType: 'listing' } %}
-    {% endif %}
-
-{% endblock %}
+{% sw_extends "@Storefront/storefront/component/product/card/box-standard.html.twig" %}
