@@ -25,7 +25,7 @@
 
                                 {# set display mode 'cover' for box-image with standard display mode #}
                                 {% if layout == 'image' and displayMode == 'standard' %}
-                                    {% set displayMode = 'contain' %}
+                                    {% set displayMode = 'cover' %}
                                 {% endif %}
 
                                 <a href="{{ seoUrl('frontend.detail.page', {'productId': id}) }}"
