@@ -1,0 +1,18 @@
+{% sw_extends "@Storefront/storefront/section/cms-section-block-container.html.twig" %}
+
+{% block section_content_block %}
+    {{ parent() }}
+    <div class="cms-block border rounded shadow {{ blockClasses|join(' ') }}"
+         style="{% if blockBgColor %} background-color: {{ blockBgColor }};{% endif %}">
+        {% block section_content_block_background_image %}
+            {% if block.backgroundMedia %}
+                {% sw_thumbnails 'cms-block-background' with {
+                    media: block.backgroundMedia,
+                    attributes: {
+                        class: "cms-block-background media-mode--" ~ block.backgroundMediaMode
+                    }
+                } %}
+            {% endif %}
+        {% endblock %}
+    </div>
+{% endblock %}
