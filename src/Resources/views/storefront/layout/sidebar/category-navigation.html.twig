@@ -14,7 +14,12 @@
                 } only %}
             {% endblock %}
         {% endif %}
-        {% if (item.category.id in activeResult.id) or (item.category.parentId in activeResult.id) %}
+        {% set splitPath = activeResult.path|split('|') %}
+        {% set siblingParent = null %}
+        {% if splitPath|length >= 3 %}
+            {% set siblingParentId = splitPath[splitPath|length - 2] %}
+        {% endif %}
+        {% if (item.category.id in activeResult.id) or (item.category.parentId in activeResult.id) or (item.category.parentId in siblingParentId) %}
             {{ parent() }}
         {% endif %}
     {% endblock %}
