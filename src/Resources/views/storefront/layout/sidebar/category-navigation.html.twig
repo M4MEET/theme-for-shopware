@@ -1,5 +1,6 @@
 {% sw_extends '@Storefront/storefront/layout/sidebar/category-navigation.html.twig' %}
     {% block layout_navigation_categories_list_entry %}
+
         {% if item.category.id in activeResult.path %}
             {% block layout_navigation_categories_recoursion %}
                 {% if item.category.id in activeResult.id %}
@@ -14,12 +15,8 @@
                 } only %}
             {% endblock %}
         {% endif %}
-        {% set splitPath = activeResult.path|split('|') %}
-        {% set siblingParent = null %}
-        {% if splitPath|length >= 3 %}
-            {% set siblingParentId = splitPath[splitPath|length - 2] %}
-        {% endif %}
-        {% if (item.category.id in activeResult.id) or (item.category.parentId in activeResult.id) or (item.category.parentId in siblingParentId) %}
+
+        {% if (item.category.id in activeResult.id) or (item.category.parentId in activeResult.id) or (item.category.parentId == activeResult.parentId) %}
             {{ parent() }}
         {% endif %}
     {% endblock %}
