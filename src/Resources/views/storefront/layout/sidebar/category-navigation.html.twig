@@ -11,14 +11,13 @@
          </a>
      {% endif %}
 
-     {% if (item.category.id in activeResult.path) %}
+     {% if item.category.id in activeResult.path %}
          {% block layout_navigation_categories_recoursion %}
              {% if item.category.id in activeResult.id %}
                  {% set levelIncrement = 1 %}
              {% else %}
                  {% set levelIncrement = 0 %}
              {% endif %}
-
              {% sw_include '@Storefront/storefront/layout/sidebar/category-navigation.html.twig' with {
                  navigationTree: item.children,
                  activeResult: activeResult,
