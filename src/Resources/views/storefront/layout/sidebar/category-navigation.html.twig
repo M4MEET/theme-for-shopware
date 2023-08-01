@@ -5,8 +5,8 @@
          <a class="category-navigation-link{% if item.category.id is same as(activeResult.id) %} is-active{% endif %}{% if item.category.id in activeResult.path %} in-path{% endif %}"
             href="{{ category_url(item.category) }}"
             {% if category_linknewtab(item.category) %}target="_blank"{% endif %}>
-             {% block layout_navigation_categories_link_children_name %}
-                 {{ item.category.translated.name }}
+             {% block layout_navigation_categories_link_parent_category %}
+                 {{ 'battron.sidebar.category.showAllCategory'|trans|sw_sanitize ~ ' ' ~ item.category.translated.name }}
              {% endblock %}
          </a>
      {% endif %}
