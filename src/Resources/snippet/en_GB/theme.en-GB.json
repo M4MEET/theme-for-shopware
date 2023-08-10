@@ -7,11 +7,6 @@
                 "outOfStock": "Not in Stock",
                 "deliveryTimeAvailable": "Delivery %name%"
             }
-        },
-        "sidebar": {
-            "category": {
-                "showAllCategory": "All"
-            }
         }
     }
 }

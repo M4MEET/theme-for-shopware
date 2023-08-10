@@ -7,11 +7,6 @@
                 "outOfStock": "Bald wieder da",
                 "deliveryTimeAvailable": "Lieferzeit %name%"
             }
-        },
-        "sidebar": {
-            "category": {
-                "showAllCategory": "Alle"
-            }
         }
     }
 }
