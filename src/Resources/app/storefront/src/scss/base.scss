@@ -7,6 +7,9 @@
 #mainNavigation {
     background-color: $gray-200;
 }
+.is-act-home .breadcrumb.container {
+  display: none;
+}
 
 .footer-main,.footer-bottom
 {
@@ -16,6 +19,10 @@
 .container
 {
     max-width: 1400px;
+}
+
+.container-main {
+  padding: 0px;
 }
 
 .category-navigation {
