@@ -8,6 +8,9 @@
       "ThemeBattronGmbh\\": "src/"
     }
   },
+  "require": {
+    "shopware/core": "6.5.*"
+  },
   "extra": {
     "shopware-plugin-class": "ThemeBattronGmbh\\ThemeBattronGmbh",
     "label": {
