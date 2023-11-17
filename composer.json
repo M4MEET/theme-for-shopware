@@ -1,6 +1,7 @@
 {
   "name": "battron/theme-battron",
   "description": "Theme skeleton plugin",
+  "version": "1.0.0",
   "type": "shopware-platform-plugin",
   "license": "MIT",
   "autoload": {
@@ -14,8 +15,8 @@
   "extra": {
     "shopware-plugin-class": "ThemeBattronGmbh\\ThemeBattronGmbh",
     "label": {
-      "de-DE": "Theme ThemeBattronGmbh plugin",
-      "en-GB": "Theme ThemeBattronGmbh plugin"
+      "de-DE": "Theme BattronGmbh",
+      "en-GB": "Theme BattronGmbh"
     }
   }
 }
