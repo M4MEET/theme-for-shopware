@@ -1,6 +1,22 @@
 {% sw_extends "@Storefront/storefront/component/product/card/price-unit.html.twig" %}
 {% block component_product_box_price_info %}
-    {{ parent() }}
+    {% set cheapest = product.calculatedCheapestPrice %}
+
+    {% set real = product.calculatedPrice %}
+    {% if product.calculatedPrices.count > 0 %}
+        {% set real = product.calculatedPrices.last %}
+    {% endif %}
+
+    {% set referencePrice = real.referencePrice %}
+
+    {% set displayFrom = product.calculatedPrices.count > 1 %}
+    {% set displayParent = product.variantListingConfig.displayParent and product.parentId === null %}
+
+    {% if displayParent %}
+        {% set displayFromVariants = displayParent and real.unitPrice !== cheapest.unitPrice %}
+        {% set real = cheapest %}
+    {% endif %}
+
     <div class="product-price-info">
         {% block component_product_box_price %}
             <div class="product-price-wrapper">
