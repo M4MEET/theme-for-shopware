@@ -5,6 +5,62 @@
             <div id="footerColumns"
                  class="row footer-columns"
                  data-collapse-footer="true">
+                {% block layout_footer_navigation_usps %}
+                    <div class="col-md-12  pt-3 footer-column js-footer-column">
+                        {% block layout_footer_navigation_inner_usp_headline %}
+                            <div class="footer-column-headline footer-headline d-md-none js-footer-column-headline js-collapse-footer-column-trigger text-primary"
+                                 id="collapseFooterUspTitle"
+                                 data-target="#collapseFooterUsp"
+                                 aria-expanded="true"
+                                 aria-controls="collapseFooterUsp">
+                                Our Services
+                                {% block layout_footer_navigation_service_usp_icons %}
+                                    <div class="footer-column-toggle">
+                                        <span class="footer-plus-icon">
+                                            {% sw_icon 'plus' %}
+                                        </span>
+                                        <span class="footer-minus-icon">
+                                            {% sw_icon 'minus' %}
+                                        </span>
+                                    </div>
+                                {% endblock %}
+                            </div>
+                        {% endblock %}
+                        {% block layout_footer_navigation_inner_service_usps %}
+                            <div id="collapseFooterUsp"
+                                 class="footer-column-content  js-footer-column-content footer-usp"
+                                 aria-labelledby="collapseFooterUspTitle">
+                                <div class="row gy-0">
+                                    {% if theme_config('sw-footer-usp-first-media') %}
+                                        <div class="usp-item col d-flex align-items-center">
+                                            <img src="{{ theme_config('sw-footer-usp-first-media')|sw_encode_url }}" alt="{{ 'battron.footer.usp.first'|trans }}" class="img-fluid me-2" style="height: 50px; width: 50px;">
+                                            <h4 class="text-primary mb-0">{{ 'battron.footer.usp.first'|trans }}</h4>
+                                        </div>
+                                    {% endif %}
+                                    {% if theme_config('sw-footer-usp-second-media') %}
+                                        <div class="usp-item col d-flex align-items-center">
+                                            <img src="{{ theme_config('sw-footer-usp-second-media')|sw_encode_url }}" alt="{{ 'battron.footer.usp.second'|trans }}" class="img-fluid me-2" style="height: 50px; width: 50px;">
+                                            <h4 class="text-primary mb-0">{{ 'battron.footer.usp.second'|trans }}</h4>
+                                        </div>
+                                    {% endif %}
+                                    {% if theme_config('sw-footer-usp-third-media') %}
+                                        <div class="usp-item col d-flex align-items-center">
+                                            <img src="{{ theme_config('sw-footer-usp-third-media')|sw_encode_url }}" alt="{{ 'battron.footer.usp.third'|trans }}" class="img-fluid me-2" style="height: 50px; width: 50px;">
+                                            <h4 class="text-primary mb-0">{{ 'battron.footer.usp.third'|trans }}</h4>
+                                        </div>
+                                    {% endif %}
+                                    {% if theme_config('sw-footer-usp-fourth-media') %}
+                                        <div class="usp-item col d-flex align-items-center">
+                                            <img src="{{ theme_config('sw-footer-usp-fourth-media')|sw_encode_url }}" alt="{{ 'battron.footer.usp.fourth'|trans }}" class="img-fluid me-2" style="height: 50px; width: 50px;">
+                                            <h4 class="text-primary mb-0">{{ 'battron.footer.usp.fourth'|trans }}</h4>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endblock %}
+                    </div>
+                {% endblock %}
+
                 {% block layout_footer_navigation_columns %}
                     {% for root in page.footer.navigation.tree %}
                         {% block layout_footer_navigation_column %}
@@ -104,7 +160,7 @@
                                  class="footer-column-content collapse js-footer-column-content footer-contact"
                                  aria-labelledby="collapseFooterHotlineTitle">
                                 <div class="footer-column-content-inner">
-                                    <p class="footer-contact-hotline">
+                                    <p class="footer-contact-hotline text-white">
                                         {{ 'footer.serviceHotline'|trans|sw_sanitize }}
                                     </p>
                                 </div>
@@ -118,13 +174,11 @@
                         {% endblock %}
                     </div>
                 {% endblock %}
+                {% block layout_footer_payment_shipping_logos %}
+                    {{ parent() }}
+                {% endblock %}
             </div>
         {% endblock %}
-
-        {% block layout_footer_payment_shipping_logos %}
-            {{ parent() }}
-        {% endblock %}
-
     </div>
 
     {% block layout_footer_bottom %}
