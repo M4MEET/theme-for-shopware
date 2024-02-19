@@ -1,1 +1,1 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["theme-battron-gmbh"],{fLGw:function(n,w){}},[["fLGw","runtime"]]]);
+(self.webpackChunk=self.webpackChunk||[]).push([["theme-battron-gmbh"],{1396:()=>{}},e=>{var h;h=1396,e(e.s=h)}]);
