@@ -5,6 +5,54 @@
         <div class="product-detail"
              itemscope
              itemtype="https://schema.org/Product">
+            <pre>{{ dump() }}</pre>
+            {% set taxInfoAlert = theme_config('taxInfoAlert') %}
+            {% set showTaxAlertInfo = theme_config('battron.detail.product.showTaxAlertInfo') %}
+            {% set configProductTaxId = page.extensions.configProductTaxId.getTaxEntity() %}
+            {% set productTaxId = page.product.taxId %}
+
+            {# Dump the value to check if it's correctly retrieved #}
+            {{ dump(configProductTaxId) }}
+
+            {% if taxInfoAlert == 1 and productTaxId == configProductTaxId %}
+                {% block custom_banner %}
+                    <div class="custom-banner">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <div class="alert alert-warning" role="alert">
+                                        {{ "battron.detail.product.showTaxAlertInfo" | trans | sw_sanitize }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+            {% endif %}
+
+
+
+            {#  {% set taxInfoAlert = theme_config('taxInfoAlert') %}
+            {% set productTaxId = page.product.taxId %}
+
+
+            {% if taxInfoAlert == 1 and (productTaxId == '018f628be3fc7a5386d1304e32697044') %}
+                {% block custom_banner %}
+                    <div class="custom-banner">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <div class="alert alert-warning" role="alert">
+                                        {{ "battron.detail.product.showTaxAlertInfo" | trans | sw_sanitize }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endblock %}
+            {% endif %}#}
+
+
             {% block page_product_detail_inner %}
                 {% block page_product_detail_content %}
                     <div class="product-detail-content">

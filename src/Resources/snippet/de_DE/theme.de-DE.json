@@ -1,5 +1,10 @@
 {
     "battron": {
+        "detail": {
+            "product": {
+                "showTaxAlertInfo": "0%-MwSt Die MwSt-Befreiung gilt nur für Komponenten, wenn sie gemäß des § 12 Abs. 3 UstG verwendet werden."
+            }
+        },
         "listing": {
             "product": {
                 "showStock": "Auf Lager",
