@@ -91,3 +91,9 @@
 .shipping-method-description > p {
   color: $background-dark-sb;
 }
+
+@include media-breakpoint-up(md) {
+  .footer-column {
+    border-bottom: 1px solid $border-color;
+  }
+}
