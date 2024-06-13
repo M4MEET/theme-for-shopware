@@ -5,14 +5,11 @@
         <div class="product-detail"
              itemscope
              itemtype="https://schema.org/Product">
-            <pre>{{ dump() }}</pre>
             {% set taxInfoAlert = theme_config('taxInfoAlert') %}
             {% set showTaxAlertInfo = theme_config('battron.detail.product.showTaxAlertInfo') %}
             {% set configProductTaxId = page.extensions.configProductTaxId.getTaxEntity() %}
             {% set productTaxId = page.product.taxId %}
 
-            {# Dump the value to check if it's correctly retrieved #}
-            {{ dump(configProductTaxId) }}
 
             {% if taxInfoAlert == 1 and productTaxId == configProductTaxId %}
                 {% block custom_banner %}
