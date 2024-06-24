@@ -1,15 +1,31 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                http://symfony.com/schema/dic/services/services-1.0.xsd">
+                               http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
         <defaults autowire="true" autoconfigure="true"/>
 
-        <service id="ThemeBattronGmbh\Subscriber\TaxInfoAlertSubscriber" public="true">
+        <!-- Define the custom log channel for the theme -->
+        <service id="monolog.logger.theme_battron_gmbh" class="Monolog\Logger">
+            <argument>theme_battron_gmbh</argument>
+            <tag name="monolog.logger" channel="theme_battron_gmbh"/>
+        </service>
+
+        <!-- Define the TaxInfoAlertSubscriber service -->
+        <service id="ThemeBattronGmbh\Subscriber\TaxInfoAlertSubscriber">
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+            <call method="setLogger">
+                <argument type="service" id="monolog.logger.theme_battron_gmbh"/>
+            </call>
             <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <!-- Register the plugin with SystemConfigService dependency -->
+        <service id="ThemeBattronGmbh\ThemeBattronGmbh" autowire="true">
+            <argument>%kernel.project_dir%/custom/plugins/ThemeBattronGmbh</argument>
+            <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService" />
         </service>
     </services>
 </container>
