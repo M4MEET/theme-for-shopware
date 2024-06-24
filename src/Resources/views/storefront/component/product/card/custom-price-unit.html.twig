@@ -90,9 +90,9 @@
     {% block page_product_detail_tax %}
         <div class="product-detail-tax-container badge">
             {% if context.taxState == "gross" %}
-                {% set taxText = "general.grossTaxInformation"|trans|sw_sanitize %}
+                {% set taxText = "ThemeBattronGmbh.listing.product.grossTaxInformation"|trans({'%product.taxRate%':product.tax.taxRate}) |sw_sanitize  %}
             {% else %}
-                {% set taxText = "general.netTaxInformation"|trans|sw_sanitize %}
+                {% set taxText = "ThemeBattronGmbh.listing.product.netTaxInformation"|trans({'%product.taxRate%':product.tax.taxRate}) |sw_sanitize %}
             {% endif %}
 
             <p class="product-detail-tax">
@@ -187,7 +187,7 @@
     {% block battron_component_product_box_stock_info %}
         <div class="product-stock-action">
             {% if product.stock >= 3 %}
-                <span class="badge rounded-pill bg-success text-white">{{ 'battron.listing.product.showStock'  | trans }}</span>
+                <span class="badge rounded-pill bg-success text-white">{{ 'battron.listing.product.showStock'  | trans  }}</span>
             {% elseif product.stock > 0 and product.stock <= 2 %}
                 <span class="badge rounded-pill bg-warning text-dark">{{ "battron.listing.product.limitedStock"|trans ({'%product.stock%': product.stock}) }}</span>
             {% elseif  product.stock <=0 %}
