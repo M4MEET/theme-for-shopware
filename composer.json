@@ -1,7 +1,7 @@
 {
   "name": "battron/theme-battron",
-  "description": "Theme skeleton plugin",
-  "version": "2.1.2",
+  "description": "Theme Battron GmbH - A custom theme designed to provide a unique and enhanced user experience for Shopware stores. Developed by Meet Joshi, this theme offers a range of customization options and optimized performance features tailored for modern e-commerce needs.",
+  "version": "2.2.0",
   "type": "shopware-platform-plugin",
   "license": "MIT",
   "autoload": {
@@ -15,8 +15,8 @@
   "extra": {
     "shopware-plugin-class": "ThemeBattronGmbh\\ThemeBattronGmbh",
     "label": {
-      "de-DE": "Theme BattronGmbh",
-      "en-GB": "Theme BattronGmbh"
+      "de-DE": "Theme Battron",
+      "en-GB": "Theme Battron"
     }
   }
 }
