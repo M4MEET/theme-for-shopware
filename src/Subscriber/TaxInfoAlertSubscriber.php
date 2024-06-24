@@ -1,8 +1,5 @@
 <?php declare(strict_types=1);
 
-/**
- * Namespace for the ThemeBattronGmbh plugin.
- */
 namespace ThemeBattronGmbh\Subscriber;
 
 use Shopware\Core\System\SystemConfig\SystemConfigService;
@@ -10,42 +7,20 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Shopware\Storefront\Page\Product\ProductPageLoadedEvent;
 use ThemeBattronGmbh\Struct\TaxInfoConfigStruct;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
-/**
- * Class TaxInfoAlertSubscriber
- *
- * This class implements the EventSubscriberInterface and is used to handle the ProductPageLoadedEvent.
- * It subscribes to the ProductPageLoadedEvent and defines the method onProductPageLoaded to handle the event.
- */
-class TaxInfoAlertSubscriber implements EventSubscriberInterface
+class TaxInfoAlertSubscriber implements EventSubscriberInterface, LoggerAwareInterface
 {
-    /**
-     * @var SystemConfigService The service for system configuration.
-     */
+    use LoggerAwareTrait;
+
     private SystemConfigService $systemConfigService;
 
-    /**
-     * @var LoggerInterface The logger service.
-     */
-    private LoggerInterface $logger;
-
-    /**
-     * TaxInfoAlertSubscriber constructor.
-     *
-     * @param SystemConfigService $systemConfigService The service for system configuration.
-     * @param LoggerInterface $logger The logger service.
-     */
-    public function __construct(SystemConfigService $systemConfigService, LoggerInterface $logger)
+    public function __construct(SystemConfigService $systemConfigService)
     {
         $this->systemConfigService = $systemConfigService;
-        $this->logger = $logger;
     }
 
-    /**
-     * Returns an array of events this subscriber wants to listen to.
-     *
-     * @return array The event names to listen to.
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -53,26 +28,23 @@ class TaxInfoAlertSubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * Handles the ProductPageLoadedEvent.
-     *
-     * This method is called whenever a product page is loaded. It fetches the tax entity ID from the system configuration,
-     * logs the tax entity ID, and if the tax entity ID is not null, it creates a new TaxInfoConfigStruct with the tax entity ID
-     * and adds it as an extension to the product page. If the tax entity ID is null, it logs a warning.
-     *
-     * @param ProductPageLoadedEvent $event The event object.
-     */
     public function onProductPageLoaded(ProductPageLoadedEvent $event): void
     {
+        $taxInfoAlert = $this->systemConfigService->get('ThemeBattronGmbh.config.taxInfoAlert');
         $configProductTaxId = $this->systemConfigService->get('ThemeBattronGmbh.config.taxEntity');
-        $this->logger->info('Config Product Tax ID:', ['configProductTaxId' => $configProductTaxId]);
+        $taxInfoText = $this->systemConfigService->get('ThemeBattronGmbh.config.taxInfoText');
 
-        if ($configProductTaxId) {
-            $taxInfoConfigStruct = new TaxInfoConfigStruct($configProductTaxId);
+        // Use the custom logger
+        $this->logger->info('Tax Info Alert Enabled:', ['taxInfoAlert' => $taxInfoAlert]);
+        $this->logger->info('Config Product Tax ID:', ['configProductTaxId' => $configProductTaxId]);
+        $this->logger->info('Tax Info Text:', ['taxInfoText' => $taxInfoText]);
+
+        if ($taxInfoAlert && $configProductTaxId) {
+            $taxInfoConfigStruct = new TaxInfoConfigStruct($configProductTaxId, $taxInfoText);
             $event->getPage()->addExtension('configProductTaxId', $taxInfoConfigStruct);
             $this->logger->info('TaxInfoConfigStruct added:', ['taxInfoConfigStruct' => $taxInfoConfigStruct]);
         } else {
-            $this->logger->warning('Config Product Tax ID is null or not set.');
+            $this->logger->warning('Tax Info Alert is disabled or Config Product Tax ID is null.');
         }
     }
 }
